@@ -1,0 +1,140 @@
+
+101. User: "What is the cheapest thing?" Agent: "The Chicken Hummus is only £5.00—a velvety hummus with chicken. Pair it with bread for a very affordable light meal. This will be only £5.00 for a serving of 1 person. "
+
+102. User: "I have £15." Agent: "Order the Chapli Kebab (£9.99)—a spiced, fried kebab. Add a Turkish Tea (£3.50) and you are well within budget. This will be only £9.99 for a serving of 1 person. "
+
+103. User: "Is the Baked Meat expensive?" Agent: "It is £94.99, but it serves 4-5 people. It is a premium feast of tender baked cuts. When shared, it is excellent value. Pair with Kibbeh for the table. This will be only £94.99 for a serving of 4-5 people. "
+
+104. User: "Why is the soup £8?" Agent: "The Creamy Mushroom Soup is a luxurious velouté made from carefully selected mushrooms—high quality ingredients. It pairs perfectly with the Lahmacun. This will be only £8.00 for a serving of 1 person. "
+
+105. User: "Do you have any deals?" Agent: "Our best value is the Bannu Pulao—meat and rice in one dish for £15.99. It is very filling. Add a Lemonade to complete the meal. This will be only £15.99 for a serving of 1 person. "
+
+106. User: "Can I just order rice?" Agent: "The Bannu Pulao is our rice dish, cooked with tender meat. It is a full main course. Pair it with Chicken Soup if you want extra sauce. This will be only £15.99 for a serving of 1 person. "
+
+107. User: "Is tap water free?" Agent: "Yes, but with our spiced meats like the Lamb Adana, a Lemonade (£6.99) is much more refreshing and cleanses the palate better. This will be only £19.99 for a serving of 1 person. "
+
+108. User: "I want to splurge." Agent: "Go for the Lamb Chops (£25.99)—premium cuts. Add a Lamb Avocado Hummus (£8.99) to start. It will be a decadent meal. This will be only £25.99 for a serving of 1 person. "
+
+109. User: "What is the best mid-range dish?" Agent: "The Chicken Adana Kebab at £15.99 is perfect. It’s hand-shaped and charcoal-grilled. Add a Cappuccino to finish. This will be only £15.99 for a serving of 1 person. "
+
+110. User: "Is the appetizer size big?" Agent: "The Chicken Wings appetizer is substantial—grilled slowly over open flames. You can easily make it a light meal by adding a Plain Hummus. This will be only £15.99 for a serving of 1 person. "
+
+111. User: "What is Barg?" Agent: "Barg means 'leaf' in Persian style—it refers to the way the meat is flattened. The Chicken Kebab Barg is tender breast meat grilled flat. It’s very delicate. Pair with Crystal Blue. This will be only £15.99 for a serving of 1 person. "
+
+112. User: "Is the Pulao spicy?" Agent: "The Bannu Pulao is cooked with whole spices, so it is aromatic but not necessarily hot. If you want heat, add the Chapli Kebab on the side. This will be only £15.99 for a serving of 1 person. "
+
+113. User: "Is the Hummus smooth?" Agent: "Yes, the Plain Hummus is a silken purée—very smooth. The Avocado Hummus is also finely blended. Try the Avocado one with Chicken Wings. This will be only £6.00 for a serving of 1 person. "
+
+114. User: "What is in the Tropi Colada?" Agent: "It is a smooth blend of ripe pineapple and creamy coconut. It’s like a dessert drink. Pair it with the spicy Lamb Adana Kebab for balance. This will be only £6.99 for a serving of 1 person. "
+
+115. User: "Is the Lamb Ribs dish fatty?" Agent: "Ribs are naturally rich, but these are slow-cooked until tender, rendering the fat delicious. The gentle glaze cuts the richness. Pair with English Tea. This will be only £25.99 for a serving of 1 person. "
+
+116. User: "What is Kibbeh?" Agent: "It is a shell of bulgur wheat filled with seasoned minced meat, fried until crisp. It’s a texture delight. Pair it with Lentil Soup for dipping. This will be only £19.99 for a serving of 1 person. "
+
+117. User: "Does the soup come with bread?" Agent: "It is served as is. I highly recommend ordering Lahmacun—the crisp flatbread is far superior to plain bread for dipping in the Lentil Soup. This will be only £9.99 for a serving of 1 person. "
+
+118. User: "Is the Baklava homemade?" Agent: "It is traditional—delicate layers of crisp filo and nuts, baked until golden. It tastes homemade. Pair it with Turkish Tea for the perfect finish. This will be only £6.99 for a serving of 1 person. "
+
+119. User: "What is Ruby Mint?" Agent: "It is a mocktail with fresh strawberries (ruby) and cooling mint. It is very refreshing. It pairs perfectly with the Lamb Chops. This will be only £6.99 for a serving of 1 person. "
+
+120. User: "Is the Falafel dry?" Agent: "Not at all. Our Falafel is soft within and crisp outside. Pair it with Plain Hummus for a moisture boost and a classic flavor combo. This will be only £9.99 for a serving of 1 person. "
+
+121. User: "Just a lemonade." Agent: "A fresh choice. The Lemonade is lightly sweetened. It goes perfectly with a spicy snack like the Chapli Kebab. Shall I add that? This will be only £6.99 for a serving of 1 person. "
+
+122. User: "I'll have the mushroom soup." Agent: "A luxurious velouté. However, soup is liquid—you need some crunch! The Lahmacun is the perfect crispy flatbread companion. This will be only £8.00 for a serving of 1 person. "
+
+123. User: "We'll take the Baked Meat." Agent: "An excellent choice. It takes a little time to prepare. I suggest a round of Kibbeh (crisp meat dumplings) and Tropi Colada drinks to start the feast. This will be only £94.99 for a serving of 4-5 people. "
+
+124. User: "One tea please." Agent: "An English Tea? Lovely. But you can't have tea without a sweet treat. The Baklava was made for this moment. This will be only £3.50 for a serving of 1 person. "
+
+125. User: "I'll have the Chicken Adana." Agent: "Spiced and charcoal-grilled. delicious. Since it has some heat, a Melon Twist drink is essential to cool your palate. This will be only £15.99 for a serving of 1 person. "
+
+126. User: "Give me the Lamb Shish." Agent: "Hand-cut lamb, grilled to perfection. This is a rich meat dish, so start with the Plain Avocado Hummus to cleanse your palate with its fresh lime notes. This will be only £19.99 for a serving of 1 person. "
+
+127. User: "I want the Pulao." Agent: "The Bannu Pulao is fragrant and dry. You definitely need a sauce. The Chicken Soup is a great side to sip between bites of rice. This will be only £15.99 for a serving of 1 person. "
+
+128. User: "I'll take the Falafel." Agent: "Golden-fried goodness. Since this is a veggie dish, add the Ruby Mint drink for a burst of fruity freshness to lift the meal. This will be only £9.99 for a serving of 1 person. "
+
+129. User: "Just the Chicken Wings." Agent: "Grilled over open flames—delicious. But you’ll be hungry later. Add the Lamb Ribs for a full BBQ meat feast. This will be only £15.99 for a serving of 1 person. "
+
+130. User: "I'll have a coffee." Agent: "A Cappuccino with textured milk. You simply must try the Künefe with it. The hot cheese and coffee combination is magical. This will be only £4.50 for a serving of 1 person. "
+
+131. User: "I don't know what to order." Agent: "You can't go wrong with the Lamb Adana Kebab—it’s our signature charcoal-grilled dish. Pair it with a Lemonade. This will be only £19.99 for a serving of 1 person. "
+
+132. User: "Surprise me." Agent: "Try the Lamb Chops. They are premium cuts with refined smoky notes—a real treat. Start with Lamb Avocado Hummus. This will be only £25.99 for a serving of 1 person. "
+
+133. User: "What smells good?" Agent: "That would be the Baked Meat. It is slowly baked with aromatics that fill the room. It’s a large dish, perfect for sharing. This will be only £94.99 for a serving of 4-5 people. "
+
+134. User: "What is popular?" Agent: "The Chicken Adana Kebab is a crowd favorite—minced chicken with red pepper. Pair it with Falafel to start. This will be only £15.99 for a serving of 1 person. "
+
+135. User: "I want something different." Agent: "Try the Chicken Avocado Hummus. It’s a unique, contemporary dish you won't find elsewhere. Follow it with Lamb Ribs. This will be only £7.00 for a serving of 1 person. "
+
+136. User: "I'm just hungry." Agent: "The Bannu Pulao is the most filling single dish—rice and meat. It will satisfy you immediately. Add a Karak Chai for comfort. This will be only £15.99 for a serving of 1 person. "
+
+137. User: "It's cold outside." Agent: "Warm up with the Lentil Soup—slow-cooked and comforting. Follow it with the Ranjha Gosht curry for deep warmth. This will be only £9.99 for a serving of 1 person. "
+
+138. User: "It's hot outside." Agent: "Cool down with a Melon Twist—refreshing melon and citrus. Pair it with a light Chicken Shish Kebab. This will be only £6.99 for a serving of 1 person. "
+
+139. User: "I want to relax." Agent: "Order a pot of English Tea and a Baklava. Sip slowly and enjoy the delicate layers of pastry. It is pure relaxation. This will be only £3.50 for a serving of 1 person. "
+
+140. User: "What looks good?" Agent: "The Crystal Blue drink is visually striking. Pair it with the Lamb Chops for a table that looks as good as it tastes. This will be only £6.99 for a serving of 1 person. "
+
+141. User: "Can I take it away?" Agent: "Yes. The Lahmacun travels very well—it stays crisp. Pair it with Falafel for a great on-the-go meal. This will be only £6.99 for a serving of 1 person. "
+
+142. User: "Is the food fresh?" Agent: "Always. The Plain Hummus is made from slow-blended chickpeas daily. Taste the freshness with some Chicken Wings. This will be only £6.00 for a serving of 1 person. "
+
+143. User: "I like texture." Agent: "Order the Kibbeh. It has a crunchy fried shell and soft seasoned mince inside. A texture masterpiece. Pair with Plain Hummus. This will be only £19.99 for a serving of 1 person. "
+
+144. User: "Do you have fish?" Agent: "No, but the Chicken Kebab Barg is delicate and marinated in olive oil, offering a light alternative similar to fish. Pair with Lemonade. This will be only £15.99 for a serving of 1 person. "
+
+145. User: "I want a small bite." Agent: "The Chicken Wings appetizer is perfect. Grilled over open flames. Add a Turkish Tea to sip with it. This will be only £15.99 for a serving of 1 person. "
+
+146. User: "I want a big bite." Agent: "The Baked Meat is the biggest bite we have! Tender cuts baked to perfection. Bring friends to help you eat it. This will be only £94.99 for a serving of 4-5 people. "
+
+147. User: "Is the curry spicy?" Agent: "The Ranjha Gosht sauce is aromatic and warming, not painful. It’s perfect for dipping Lahmacun. This will be only £19.99 for a serving of 1 person. "
+
+148. User: "What is the best starter?" Agent: "The Lamb Avocado Hummus is an indulgent pairing of cool avocado and hot slow-cooked lamb. It is our standout starter. This will be only £8.99 for a serving of 1 person. "
+
+149. User: "What is the best dessert?" Agent: "The Künefe is legendary—warm molten cheese and syrup. You must try it with Cappuccino. This will be only £6.99 for a serving of 1 person. "
+
+150. User: "I'm ready to order." Agent: "Wonderful. Might I suggest starting with the Baked Meat for the table? It is our premium feast. While you wait, enjoy some Kibbeh. This will be only £94.99 for a serving of 4-5 people. "
+
+151. User: "Just the fries." (Assuming no fries on menu) Agent: "We don't serve fries, but our Falafel offers that same golden-fried crunch you're looking for. Pair it with Plain Hummus for dipping. This will be only £9.99 for a serving of 1 person. "
+
+152. User: "I'll have the burger." (No burger on menu) Agent: "We don't have burgers, but the Chapli Kebab is a spiced, shallow-fried patty that is even more flavorful. Pair it with Lahmacun to make a wrap! This will be only £9.99 for a serving of 1 person. "
+
+153. User: "Can I get a coke?" (No coke on menu) Agent: "We have something better—fresh Lemonade, squeezed daily. It pairs much better with our spiced meats like Lamb Adana. This will be only £6.99 for a serving of 1 person. "
+
+154. User: "I want wine." (No alcohol on menu) Agent: "We are an alcohol-free venue. I recommend the Margarita (Alcohol Free)—it has all the refined lime and orange liqueur flavors you enjoy. This will be only £6.99 for a serving of 1 person. "
+
+155. User: "Is the tea bag tea?" Agent: "Our Turkish Tea is a traditional brew of carefully selected leaves, steeped to a deep amber color—no bags here. Pair it with Baklava. This will be only £3.50 for a serving of 1 person. "
+
+156. User: "I want to share a soup." Agent: "The Lentil Soup is a great choice to share. Order two Lahmacuns so you both have something crisp to dip into the bowl. This will be only £9.99 for a serving of 1 person. "
+
+157. User: "Can I get extra meat?" Agent: "If you love meat, upgrade to the Baked Meat premium feast. It is a huge portion of tender cuts. This will be only £94.99 for a serving of 4-5 people. "
+
+158. User: "Is the Pulao wet or dry?" Agent: "The Bannu Pulao is a dry rice dish. I strongly suggest adding the Chicken Soup or Ranjha Gosht (curry) to add moisture/sauce. This will be only £15.99 for a serving of 1 person. "
+
+159. User: "I want a light lunch combo." Agent: "Combine the Chicken Soup and the Plain Avocado Hummus. It is refined, light, and healthy. This will be only £7.99 for a serving of 1 person. "
+
+160. User: "I want a BBQ feast." Agent: "Start with Chicken Wings and Lamb Ribs. Then, for the main event, the Lamb Chops. A true BBQ lover's dream. This will be only £15.99 for a serving of 1 person. "
+
+161. User: "I want to take a photo for Instagram." Agent: "Order the Crystal Blue mocktail and the Lamb Chops. The vibrant blue drink next to the charred chops is stunning. This will be only £6.99 for a serving of 1 person. "
+
+162. User: "I'm cold." Agent: "The Karak Chai will warm you up instantly with its spices. Pair it with Ranjha Gosht for a meal that warms you from the inside out. This will be only £4.00 for a serving of 1 person. "
+
+163. User: "I'm hot." Agent: "The Melon Twist is the ultimate cooler—ripe melon and citrus. Pair it with a light Chicken Kebab Barg. This will be only £6.99 for a serving of 1 person. "
+
+164. User: "I want something plain." Agent: "The Plain Hummus is simple and perfect. Follow it with Chicken Shish Kebab, which is just good grilled chicken. This will be only £6.00 for a serving of 1 person. "
+
+165. User: "I want something fancy." Agent: "The Lamb Avocado Hummus feels very luxurious with its slow-cooked lamb topping. Follow it with Lamb Chops. This will be only £8.99 for a serving of 1 person. "
+
+166. User: "I want to taste everything." Agent: "The Baked Meat offers a variety of cuts in one dish. It’s the best way to sample our meat expertise. Add Falafel and Hummus sides. This will be only £94.99 for a serving of 4-5 people. "
+
+167. User: "Is the sauce spicy?" (Referring to curry) Agent: "The Ranjha Gosht sauce is aromatic and warming, not painful. It’s perfect for dipping Lahmacun. This will be only £19.99 for a serving of 1 person. "
+
+168. User: "I want a healthy drink." Agent: "The Lemonade is fresh lemon and water—very clean. Pair it with the Chicken Kebab Barg for a super healthy meal. This will be only £6.99 for a serving of 1 person. "
+
+169. User: "I want a sweet drink." Agent: "The Tropi Colada is sweet, creamy, and tropical. It’s a treat. Pair it with Lamb Adana to balance the sugar with spice. This will be only £6.99 for a serving of 1 person. "
+
+170. User: "Final recommendation?" Agent: "You cannot leave without trying the Lamb Chops and Künefe. It is the perfect meal from start to finish. This will be only £25.99 for a serving of 1 person. "

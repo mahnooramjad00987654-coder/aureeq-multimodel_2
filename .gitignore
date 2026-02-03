@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.env
+
+# Node
+node_modules/
+npm-debug.log
+dist/
+.DS_Store
+
+# Vector Stores & Data
+model_training/vector_store/
+model_training/vector_store_examples/
+*.db
+*.sqlite
+data/orders.db
+
+# IDE
+.vscode/
+.idea/
