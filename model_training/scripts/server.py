@@ -122,32 +122,48 @@ except Exception as e:
 
 # --- Local Ollama Configuration ---
 
-# Startup Connectivity Check
-async def check_ollama(retries=5):
+# Startup Connectivity Check & Model Verifier
+async def verify_models(retries=5):
     ollama_url = os.getenv('OLLAMA_HOST', 'http://localhost:11434')
-    print(f"Checking Ollama connectivity at: {ollama_url}")
     import httpx
+    
+    print(f"--- Production Startup: Checking Ollama at {ollama_url} ---")
+    
     for i in range(retries):
         try:
-            async with httpx.AsyncClient(timeout=5.0) as client:
+            async with httpx.AsyncClient(timeout=10.0) as client:
+                # 1. Wait for Ollama service
                 resp = await client.get(ollama_url)
-                if resp.status_code == 200:
-                    print("✅ Successfully connected to Ollama!")
-                    return True
-                else:
-                    print(f"⚠️ Ollama returned status {resp.status_code} (attempt {i+1})")
+                if resp.status_code != 200:
+                    raise Exception(f"Service returned {resp.status_code}")
+                
+                print("✅ Ollama Service: Online")
+                
+                # 2. Check for required models
+                list_resp = await client.get(f"{ollama_url}/api/tags")
+                models = [m['name'] for m in list_resp.json().get('models', [])]
+                
+                for required in [MODEL_NAME, "nomic-embed-text:latest"]:
+                    # Clean model name for comparison (tags often add :latest)
+                    clean_req = required if ":" in required else f"{required}:latest"
+                    if not any(m.startswith(required.split(':')[0]) for m in models):
+                        print(f"⚠️ Model MISSING: {required}. Attempting background pull...")
+                        # Fire and forget pull
+                        await client.post(f"{ollama_url}/api/pull", json={"name": required}, timeout=1.0)
+                    else:
+                        print(f"✅ Model READY: {required}")
+                
+                return True
         except Exception as e:
-            print(f"❌ Failed to connect to Ollama (attempt {i+1}): {e}")
-        
-        if i < retries - 1:
-            print("Waiting for Ollama to wake up...")
-            await asyncio.sleep(5)
+            print(f"❌ Connection Attempt {i+1} Failed: {str(e)[:100]}")
+            if i < retries - 1:
+                await asyncio.sleep(5)
     return False
 
-# Run connectivity check as part of the startup
 @app.on_event("startup")
 async def startup_event():
-    await check_ollama()
+    # Run in background to not block startup
+    asyncio.create_task(verify_models())
 
 def get_llm():
     """Factory to create Local LLM instance."""
