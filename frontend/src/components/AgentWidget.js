@@ -290,12 +290,12 @@ export function setupAgentInteraction(avatarRenderer) {
         return;
       }
 
+      let fullText = "";
       try {
         const reader = res.body.getReader();
         const decoder = new TextDecoder();
         contentEl.innerText = "";
 
-        let fullText = "";
         while (true) {
           const { done, value } = await reader.read();
           if (done) break;
