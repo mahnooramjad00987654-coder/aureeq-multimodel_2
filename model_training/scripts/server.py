@@ -395,11 +395,21 @@ async def chat_endpoint(request: ChatRequest):
         user_info_str += f"Email: {email}\n"
         user_info_str += f"Preferences: {request.user_metadata.get('preferences', '')}\n"
 
-    print("Retrieving relevant examples...")
-    relevant_examples = get_relevant_examples(user_query, k=3)
-    print(f"DEBUG: Retrieved Examples:\n{relevant_examples[:200]}...") # Log first 200 chars
-    if not relevant_examples:
-        relevant_examples = "No specific examples found."
+    print(f"--- Chat Request Received ---")
+    print(f"Message: {user_query[:50]}...")
+    
+    # 1. RETRIEVE EXAMPLES (with timeout/safety)
+    print("Retrieving relevant sales examples...")
+    try:
+        # Simple RAG retrieval with explicit log
+        relevant_examples = get_relevant_examples(user_query, k=3)
+        if not relevant_examples:
+            print("INFO: No relevant examples found for this query.")
+            relevant_examples = "No specific examples found."
+        print(f"DEBUG: Retrieved Examples ({len(relevant_examples)} chars)")
+    except Exception as e:
+        print(f"ERROR: RAG Retrieval Failed: {e}. Falling back to default.")
+        relevant_examples = "Context unavailable."
 
 
     final_system = SYSTEM_PROMPT_TEMPLATE.replace("{context}", provided_context)\
@@ -409,14 +419,18 @@ async def chat_endpoint(request: ChatRequest):
     combined_prompt = f"{final_system}\n\nUSER MESSAGE: {user_query}"
     prompt_messages = [("user", combined_prompt)]
 
-    print(f"--- Chat Request ---")
-    print(f"User: {request.user_id}")
-    print(f"Prompt length: {len(combined_prompt)}")
+    print(f"Constructed prompt length: {len(combined_prompt)}")
+    print("Starting LLM stream...")
     
     # Stream the response content directly to the client
     return StreamingResponse(
         generate_response(prompt_messages, user_query), 
-        media_type="text/event-stream"
+        media_type="text/event-stream",
+        headers={
+            "Cache-Control": "no-cache",
+            "Connection": "keep-alive",
+            "X-Content-Type-Options": "nosniff"
+        }
     )
 
 # --- Other Endpoints ---
