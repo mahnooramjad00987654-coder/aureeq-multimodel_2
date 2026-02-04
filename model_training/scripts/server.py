@@ -308,26 +308,34 @@ REMEMBER:
 - Never change or invent anything
 - NO MARKDOWN: Do NOT use **bold**, *italics*, or any other markdown formatting. Use plain text only."""
 
-def get_relevant_examples(query: str, k: int = 3):
-    """Retrieve top k similar examples for the query."""
+async def get_relevant_examples_async(query: str, k: int = 3):
+    """Retrieve top k similar examples with a strict timeout."""
     if not example_store:
-        print("DEBUG: Example store NOT LOADED. Skipping RAG.")
         return ""
     
     try:
-        print(f"DEBUG: Starting similarity search for query: {query[:50]}...")
-        # Similarity search returns Document objects
-        results = example_store.similarity_search(query, k=k)
-        print(f"DEBUG: Similarity search finished. Results found: {len(results)}")
-        formatted_examples = ""
-        for i, doc in enumerate(results):
-             # We stored "full_example" in metadata during ingestion
-             ex_text = doc.metadata.get("full_example", doc.page_content)
-             formatted_examples += f"{ex_text}\n\n"
-        return formatted_examples.strip()
+        # Run the blocking similarity search in a thread with a timeout
+        print(f"DEBUG: Starting similarity search (async wrapper)...")
+        import concurrent.futures
+        loop = asyncio.get_event_loop()
+        with concurrent.futures.ThreadPoolExecutor() as pool:
+             # Timeout of 10 seconds for vector search
+             try:
+                 results = await asyncio.wait_for(
+                     loop.run_in_executor(pool, lambda: example_store.similarity_search(query, k=k)),
+                     timeout=10.0
+                 )
+                 print(f"DEBUG: Similarity search finished. Results: {len(results)}")
+                 formatted_examples = ""
+                 for i, doc in enumerate(results):
+                      ex_text = doc.metadata.get("full_example", doc.page_content)
+                      formatted_examples += f"{ex_text}\n\n"
+                 return formatted_examples.strip()
+             except asyncio.TimeoutError:
+                 print("⚠️ RAG Search TIMEOUT - Skipping examples to avoid hang.")
+                 return ""
     except Exception as e:
         print(f"ERROR: Example retrieval failed: {e}")
-        traceback.print_exc()
         return ""
 
 async def generate_response(prompt_messages, user_input_text):
@@ -398,33 +406,53 @@ async def chat_endpoint(request: ChatRequest):
     print(f"--- Chat Request Received ---")
     print(f"Message: {user_query[:50]}...")
     
-    # 1. RETRIEVE EXAMPLES (with timeout/safety)
-    print("Retrieving relevant sales examples...")
-    try:
-        # Simple RAG retrieval with explicit log
-        relevant_examples = get_relevant_examples(user_query, k=3)
-        if not relevant_examples:
-            print("INFO: No relevant examples found for this query.")
-            relevant_examples = "No specific examples found."
-        print(f"DEBUG: Retrieved Examples ({len(relevant_examples)} chars)")
-    except Exception as e:
-        print(f"ERROR: RAG Retrieval Failed: {e}. Falling back to default.")
-        relevant_examples = "Context unavailable."
+    # Yield a space immediately to establish the stream and prevent browser timeout
+    async def chat_generator():
+        yield " " # Initial pulse
+        
+        # 1. RETRIEVE EXAMPLES (with timeout safety)
+        print("Retrieving relevant sales examples...")
+        try:
+            relevant_examples = await get_relevant_examples_async(user_query, k=3)
+            if not relevant_examples:
+                print("INFO: No relevant examples found or search timed out.")
+                relevant_examples = "No specific examples found."
+            print(f"DEBUG: Examples context ready ({len(relevant_examples)} chars)")
+        except Exception as e:
+            print(f"ERROR: RAG Retrieval Path Failed: {e}")
+            relevant_examples = "Context unavailable."
 
+        final_system = SYSTEM_PROMPT_TEMPLATE.replace("{context}", provided_context)\
+                                           .replace("{examples}", relevant_examples)\
+                                           .replace("{user_info}", user_info_str)
+        
+        combined_prompt = f"{final_system}\n\nUSER MESSAGE: {user_query}"
+        prompt_messages = [("user", combined_prompt)]
+        
+        print(f"Starting LLM with prompt ({len(combined_prompt)} chars)...")
+        try:
+            # Check model presence before streaming to provide better error
+            ollama_url = os.getenv('OLLAMA_HOST', 'http://localhost:11434')
+            import httpx
+            async with httpx.AsyncClient() as client:
+                models_resp = await client.get(f"{ollama_url}/api/tags")
+                models = [m['name'] for m in models_resp.json().get('models', [])]
+                if not any(m.startswith(MODEL_NAME.split(':')[0]) for m in models):
+                    yield "Aureeq is still initializing her brain (downloading models). Please wait 2-3 minutes and try again..."
+                    return
 
-    final_system = SYSTEM_PROMPT_TEMPLATE.replace("{context}", provided_context)\
-                                         .replace("{user_info}", user_info_str)\
-                                         .replace("{examples}", relevant_examples)
-                                         
-    combined_prompt = f"{final_system}\n\nUSER MESSAGE: {user_query}"
-    prompt_messages = [("user", combined_prompt)]
+            llm_instance = get_llm()
+            async for chunk in llm_instance.astream(prompt_messages):
+                if hasattr(chunk, 'content') and chunk.content:
+                    yield chunk.content
+                elif isinstance(chunk, str):
+                    yield chunk
+        except Exception as e:
+            print(f"CRITICAL Stream Error: {e}")
+            yield "\n\n[Connectivity issue: The AI is taking too long to respond. Please try a shorter message.]"
 
-    print(f"Constructed prompt length: {len(combined_prompt)}")
-    print("Starting LLM stream...")
-    
-    # Stream the response content directly to the client
     return StreamingResponse(
-        generate_response(prompt_messages, user_query), 
+        chat_generator(), 
         media_type="text/event-stream",
         headers={
             "Cache-Control": "no-cache",
