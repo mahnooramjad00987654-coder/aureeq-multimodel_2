@@ -274,6 +274,15 @@ export function setupAgentInteraction(avatarRenderer) {
       // but here we just pass text to backend which handles heavy lifting
       const context = await SalesAgent.assembleContext(text, user);
 
+      let aiMsgDiv = addMessage("Aureeq is thinking...");
+      let contentEl = aiMsgDiv.querySelector('.msg-content');
+
+      const res = await fetch(`${API_BASE_URL}/chat`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: text, user_id: user.email, context: context, user_metadata: user })
+      });
+
       if (!res.ok) {
         const errorText = await res.text();
         contentEl.innerText = `Error: Backend returned ${res.status}. ${errorText}`;
@@ -283,8 +292,6 @@ export function setupAgentInteraction(avatarRenderer) {
 
       const reader = res.body.getReader();
       const decoder = new TextDecoder();
-      let aiMsgDiv = addMessage("Aureeq is thinking...");
-      let contentEl = aiMsgDiv.querySelector('.msg-content');
       contentEl.innerText = "";
 
       let fullText = "";
