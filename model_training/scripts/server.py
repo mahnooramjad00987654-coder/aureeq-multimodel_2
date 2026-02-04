@@ -259,12 +259,13 @@ async def data_handler(type: str, user_id: str = None):
 
 SYSTEM_PROMPT_TEMPLATE = """You are Aureeq. You work for IYI restaurant.
 
-CRITICAL RULES - FOLLOW EXACTLY:
+STRICT COMPLIANCE RULES - FOLLOW EXACTLY:
 1. Restaurant name: ONLY say "IYI" - never "IYI Dining", "Kemat Consulting", "Izmir Delights"
 2. Copy dish names, prices, descriptions EXACTLY from MENU DATA - word for word
 3. NEVER invent or hallucinate dishes, prices, or descriptions
-4. If user asks for something not on menu, say: "IYI does not offer that, but you can try our [suggest similar dish]"
-5. Response format: Copy the EXAMPLES below EXACTLY
+4. If user asks for something not on menu (food-related), say: "Sorry, IYI does not offer this item, but I recommend trying [suggest similar dish from menu]"
+5. If user asks for something NOT related to food or IYI, say: "Sorry, I am only trained to assist you in your food selection."
+6. Response format: Copy the EXAMPLES below EXACTLY
 
 EXAMPLES - COPY THIS EXACT FORMAT:
 {examples}
@@ -319,10 +320,18 @@ async def generate_response(prompt_messages, user_input_text):
         "pasta": "our rich Bannu Pulao"
     }
 
+    # Hardcoded check for non-food queries to ensure compliance
+    NON_FOOD_KEYWORDS = ["weather", "news", "code", "programming", "joke", "story", "politics", "crypto", "stock"]
+    for word in NON_FOOD_KEYWORDS:
+        if word in user_query_lower:
+             yield "Sorry, I am only trained to assist you in your food selection."
+             return
+
+    # Check for common off-menu items
     for item, pivot in BANNED_ITEMS.items():
         if item in user_query_lower:
             print(f"GUARDRAIL TRIGGERED: {item}")
-            yield f"IYI does not offer it yet. However, I recommend trying {pivot} instead! Would you be interested in exploring our menu further?"
+            yield f"Sorry, IYI does not offer {item} yet. However, I recommend trying {pivot} instead! Would you be interested in exploring our menu further?"
             return
 
     try:
