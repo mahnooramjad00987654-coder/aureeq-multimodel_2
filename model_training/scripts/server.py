@@ -20,7 +20,7 @@ import re
 DB_DIR = "../vector_store"
 EXAMPLES_DB_DIR = "../vector_store_examples"
 SQLITE_PATH = "aureeq.db"
-MODEL_NAME = "llama3.1:8b"  # Upgraded from phi3 for better instruction following
+MODEL_NAME = "llama3.2:3b"  # Switched from 8b to 3b for 5x faster response times
 
 app = FastAPI()
 
@@ -171,9 +171,10 @@ def get_llm():
         model=MODEL_NAME, 
         base_url=ollama_base_url,
         keep_alive="24h",
-        timeout=300, # 5 min timeout for first token
-        num_ctx=8192,
+        timeout=120, # Reduced timeout as 3b is much faster
+        num_ctx=4096, # Reduced context window for speed (more than enough for menu)
         temperature=0.7,
+        num_thread=4, # Optimize for parallel CPU execution
         stop=["\n\nUser:", "USER:", "User:"]
     )
 

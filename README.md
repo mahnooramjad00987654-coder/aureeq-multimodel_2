@@ -21,7 +21,7 @@ This project is fully containerized. You can deploy it on any machine with Docke
 The AI engine (Ollama) is integrated. Wait ~15 seconds for the service to start, then run these commands once to download the brains:
 ```bash
 # Download the LLM
-docker exec -it ollama ollama pull llama3.1:8b
+docker exec -it ollama ollama pull llama3.2:3b
 
 # Download the Embeddings model
 docker exec -it ollama ollama pull nomic-embed-text
