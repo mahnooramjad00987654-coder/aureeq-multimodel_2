@@ -22,9 +22,6 @@ services:
     volumes:
       - ollama_storage:/root/.ollama
 
-volumes:
-  ollama_storage:
-
   frontend:
     build:
       context: .
@@ -33,3 +30,6 @@ volumes:
       - "80:5173" # Standard HTTP port for VPS deployment
     depends_on:
       - backend
+
+volumes:
+  ollama_storage:
