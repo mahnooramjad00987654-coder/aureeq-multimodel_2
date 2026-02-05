@@ -294,15 +294,25 @@ export function setupAgentInteraction(avatarRenderer) {
       try {
         const reader = res.body.getReader();
         const decoder = new TextDecoder();
-        contentEl.innerText = "";
+        let hasTokens = false;
 
         while (true) {
           const { done, value } = await reader.read();
           if (done) break;
+
+          if (!hasTokens) {
+            contentEl.textContent = "";
+            hasTokens = true;
+          }
+
           const chunk = decoder.decode(value);
           fullText += chunk;
-          contentEl.innerText = fullText.trimStart();
+          contentEl.textContent = fullText;
           messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        if (!hasTokens) {
+          contentEl.textContent = "The brain is cooling down. Please try again.";
         }
       } catch (streamError) {
         console.error("Stream interrupted:", streamError);

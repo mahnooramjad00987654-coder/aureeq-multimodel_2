@@ -74,9 +74,8 @@ log("Loading Menu Data...")
 try:
     MENU_PATH = os.path.join(os.path.dirname(__file__), "../data/carnivore_menu.txt")
     with open(MENU_PATH, "r", encoding="utf-8") as f:
-        raw_content = f.read()
-        FULL_MENU_CONTEXT = parse_menu_to_json(raw_content)
-    log("Full Menu Parsed Successfully!")
+        FULL_MENU_CONTEXT = f.read()[:4000] # Cap context for speed
+    log("Full Menu Loaded (Markdown, Capped)!")
 except Exception as e:
     log(f"Error loading menu: {e}")
     FULL_MENU_CONTEXT = "Menu data unavailable."
@@ -212,7 +211,13 @@ User: hello
 Aureeq: Hello {user_name}, I am Aureeq from IYI. I highly recommend our Ranjha Gosht (£19.99) which is a rich lamb curry.
 
 User: add to cart lamb chops
-Aureeq: Certainly {user_name}, I have added the Lamb Chops (£25.99) to your cart. [ORDER: Lamb Chops | £25.99]
+Aureeq: Certainly {user_name}, I have successfully added the Lamb Chops (£25.99) to your cart. [ORDER: Lamb Chops | £25.99]
+
+User: can i have ranjha gosht?
+Aureeq: Excellent choice {user_name}! I have added the Ranjha Gosht (£19.99) to your cart. [ORDER: Ranjha Gosht | £19.99]
+
+User: yes please
+Aureeq: Certainly {user_name}, I have added that to your cart for you. [ORDER: Lamb Chops | £25.99]
 
 User: do you have pizza?
 Aureeq: IYI doesn't offer it right now but you can have other options. I recommend our Lahmacun (£6.99) which is a crisp flatbread with minced meat.
@@ -278,7 +283,6 @@ async def chat_endpoint(request: ChatRequest):
 
     async def chat_generator():
         log("DEBUG: Chat generator EXECUTION START")
-        # Pulse 1: visible space
         yield " " 
         
         try:
@@ -292,7 +296,6 @@ async def chat_endpoint(request: ChatRequest):
 
             log("DEBUG: Getting examples...")
             relevant_examples = await get_relevant_examples_async(user_query, k=2)
-            yield " " # Pulse 2
 
             user_query_lower = user_query.lower()
             NON_FOOD_KEYWORDS = ["weather", "news", "coding", "programming", "joke", "politics"]
@@ -308,19 +311,16 @@ async def chat_endpoint(request: ChatRequest):
             if relevant_examples:
                 final_system += f"\n\nFAVORITE EXAMPLES:\n{relevant_examples}"
 
-            messages = [
-                {"role": "system", "content": final_system},
-                {"role": "user", "content": user_query}
-            ]
+            prompt = f"{final_system}\n\nUser: {user_query}\nAureeq: "
             
-            log(f"DEBUG: Invoking Ollama directly for robustness...")
+            log(f"DEBUG: Invoking Ollama /api/generate...")
             import httpx
             ollama_url = os.getenv('OLLAMA_HOST', 'http://localhost:11434')
             
             async with httpx.AsyncClient(timeout=600.0) as client:
-                async with client.stream("POST", f"{ollama_url}/api/chat", json={
+                async with client.stream("POST", f"{ollama_url}/api/generate", json={
                     "model": MODEL_NAME,
-                    "messages": messages,
+                    "prompt": prompt,
                     "stream": True,
                     "options": {"temperature": 0.3}
                 }) as response:
@@ -333,20 +333,17 @@ async def chat_endpoint(request: ChatRequest):
                     async for line in response.aiter_lines():
                         if not line: continue
                         try:
-                            # log(f"DEBUG: Ollama line: {line[:100]}") # Keep it reasonably short
                             chunk = json.loads(line)
                             if "error" in chunk:
-                                log(f"OLLAMA ERROR: {chunk['error']}")
                                 yield f"\n[Brain error: {chunk['error']}]"
                                 break
                             
-                            if "message" in chunk and "content" in chunk["message"]:
-                                content = chunk["message"]["content"]
-                                if content:
-                                    if not has_tokens:
-                                        log("DEBUG: First REAL token received!")
-                                        has_tokens = True
-                                    yield content
+                            content = chunk.get("response")
+                            if content:
+                                if not has_tokens:
+                                    log("DEBUG: First REAL token received!")
+                                    has_tokens = True
+                                yield content
                             if chunk.get("done"):
                                 log(f"DEBUG: Ollama done. Total tokens received: {has_tokens}")
                                 break
@@ -364,7 +361,16 @@ async def chat_endpoint(request: ChatRequest):
         finally:
             log("--- DEBUG: Chat generator CLOSED ---")
 
-    return StreamingResponse(chat_generator(), media_type="text/plain")
+    return StreamingResponse(
+        chat_generator(), 
+        media_type="text/plain",
+        headers={
+            "Cache-Control": "no-cache",
+            "Connection": "keep-alive",
+            "X-Accel-Buffering": "no",
+            "Content-Type": "text/plain; charset=utf-8"
+        }
+    )
 
 @app.get("/api/welcome")
 async def welcome_endpoint(user_id: str = None, name: str = None):
