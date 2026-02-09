@@ -244,7 +244,7 @@ INTERNAL CONFIGURATION: Handle SIMPLE, DIRECT queries.
 STRICT RULES:
 1. MENU ONLY: If item is not in menu, say: "Sorry, we don't offer that item at the moment, but you can explore our other options."
 2. EXACTNESS: Use exact names and prices from menu. No inventing.
-3. BREVITY: Max 2-4 sentences. Friendly, human tone.
+3. BREVITY: Max 2-4 sentences. Friendly, human tone. Always mention "IYI" when referring to the restaurant or menu.
 4. ORDER TAGGING: ONLY append [ORDER: Item Name | Price] if user EXPLICITLY says "add", "buy", or "order".
    - IF user asks "What is X?" -> NO TAG.
    - IF user says "I like X" -> NO TAG.
@@ -432,7 +432,7 @@ async def chat_endpoint(request: ChatRequest):
 
 @app.get("/api/welcome")
 async def welcome_endpoint(user_id: str = None, name: str = None):
-    welcome_text = "Hello I am AUREEQ your personal assistant, How may I help you today?"
+    welcome_text = "Hello! I am Aureeq, your personal food assistant at IYI. How may I help you today?"
     audio_filename = f"welcome_{uuid.uuid4()}.mp3"
     audio_path = os.path.join(DATA_DIR, audio_filename)
     try:
